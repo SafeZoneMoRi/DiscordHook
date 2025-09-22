@@ -1,0 +1,9 @@
+# ตั่งค่าคำสั่งให้รางวัล
+rewards:
+  onLink:
+    - "minecraft:give %player% DIAMOND 1"
+    - "say %player% ได้รับรางวัลจากการลิงก์ Discord!"
+# ตั่งค่า link เชิญเข้า
+discord:
+  invite: "https://discord.gg/j8sHeM92Fx"
+  message: "&b『 &fคลิกที่นี้เพื่อทำการเข้า &7( &f &7) &fเซิฟเวอร์ &b』"
