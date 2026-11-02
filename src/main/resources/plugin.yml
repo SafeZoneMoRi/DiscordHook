@@ -1,13 +1,14 @@
 name: DiscordHook
-version: '1.0'
+authors: [SafeZoneMoRi]
+version: '1.1'
 main: org.minecraft.discordHook.DiscordHook
 api-version: '1.21'
 depend:
   - DiscordSRV
 commands:
   discordhook:
-    description: Discord main command
-    usage: /<command> <reload|list>
+    description: DiscordHook main command
+    usage: /<command> <reload|list|check <player>|reset <player>>
     permission: discordhook.admin
     permission-message: §cYou do not have permission to use this command!
     aliases:

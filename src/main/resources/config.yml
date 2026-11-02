@@ -1,5 +1,40 @@
-# ตั่งค่าคำสั่งให้รางวัล
+# ========================================================
+#                 DiscordHook Configuration
+# ========================================================
+
+# ตั้งค่าการเชื่อมต่อฐานข้อมูล MySQL
+# บันทึกสถานะว่าบัญชีเกมใดรับรางวัลไปแล้ว เพื่อป้องกันการ Unlink แล้ว Link ใหม่เพื่อปั๊มของ
+mysql:
+  enabled: true
+  host: "localhost"
+  port: 3306
+  database: "minecraft"
+  username: "root"
+  password: ""
+  table: "discordhook_rewards"
+  use-ssl: false
+
+  # การตั้งค่า HikariCP Connection Pool
+  pool:
+    maximum-pool-size: 10
+    minimum-idle: 2
+    connection-timeout: 30000
+
+# ตั้งค่าความปลอดภัยเพิ่มเติม
+settings:
+  # ป้องกันไม่ให้ Discord ID เดียวกัน นำไปใช้รับรางวัลกับตัวละครเกมอื่นซ้ำ
+  # true = 1 Discord ID รับรางวัลได้แค่ครั้งเดียวเท่านั้น
+  # false = อนุญาตให้ Discord ID เดิมใช้รับรางวัลกับไอดีเกมตัวอื่นได้
+  prevent-duplicate-discord: true
+
+# ตั้งค่าคำสั่งแจกรางวัลเมื่อผู้เล่นเชื่อมโยง Discord สำเร็จ (และยังไม่เคยรับ)
 rewards:
   onLink:
     - "minecraft:give %player% DIAMOND 1"
     - "say %player% ได้รับรางวัลจากการลิงก์ Discord!"
+
+# ข้อความแจ้งเตือนต่างๆ (รองรับ Color Code ด้วย &)
+messages:
+  already-claimed: "&c[!] บัญชีเกมของคุณเคยรับรางวัลจากการเชื่อมต่อ Discord ไปแล้ว ไม่สามารถรับซ้ำได้!"
+  discord-already-claimed: "&c[!] บัญชี Discord นี้เคยถูกใช้รับรางวัลไปแล้ว ไม่สามารถรับซ้ำได้!"
+  reward-success: "&a[!] เชื่อมต่อสำเร็จ! คุณได้รับของรางวัลเรียบร้อยแล้ว"

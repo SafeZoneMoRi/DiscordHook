@@ -1,5 +1,0 @@
-# ตั่งค่าคำสั่งให้รางวัล
-rewards:
-  onLink:
-    - "minecraft:give %player% DIAMOND 1"
-    - "say %player% ได้รับรางวัลจากการลิงก์ Discord!"

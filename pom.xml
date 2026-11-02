@@ -6,11 +6,11 @@
 
     <groupId>com.example</groupId>
     <artifactId>DiscordHook</artifactId>
-    <version>1.0</version>
+    <version>1.1</version>
     <packaging>jar</packaging>
 
     <name>DiscordSRVAddon</name>
-    <description>Example addon for DiscordSRV to reward players on account link</description>
+    <description>Addon for DiscordSRV to reward players on account link with MySQL anti-exploit tracking</description>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
@@ -25,10 +25,16 @@
             <url>https://repo.papermc.io/repository/maven-public/</url>
         </repository>
 
-        <!-- DiscordSRV -->
+        <!-- Spigot -->
         <repository>
             <id>spigot-repo</id>
             <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
+        </repository>
+
+        <!-- DiscordSRV Nexus Repository -->
+        <repository>
+            <id>scarsz-nexus</id>
+            <url>https://nexus.scarsz.me/content/groups/public/</url>
         </repository>
     </repositories>
 
@@ -41,13 +47,20 @@
             <scope>provided</scope>
         </dependency>
 
+        <!-- HikariCP (Included in Paper runtime, provided scope) -->
+        <dependency>
+            <groupId>com.zaxxer</groupId>
+            <artifactId>HikariCP</artifactId>
+            <version>5.1.0</version>
+            <scope>provided</scope>
+        </dependency>
+
         <!-- DiscordSRV API -->
         <dependency>
             <groupId>com.discordsrv</groupId>
             <artifactId>discordsrv</artifactId>
-            <version>1.30.1</version>
-            <scope>system</scope>
-            <systemPath>${project.basedir}/libs/DiscordSRV-Build-1.30.1.jar</systemPath>
+            <version>1.30.5</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 
