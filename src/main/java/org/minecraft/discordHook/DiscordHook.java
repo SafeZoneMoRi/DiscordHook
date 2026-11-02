@@ -82,8 +82,7 @@ public final class DiscordHook extends JavaPlugin {
                 getLogger().info("Player " + playerName + " (" + uuid + ") tried to claim reward again, but already claimed!");
                 Player onlinePlayer = offlinePlayer.getPlayer();
                 if (onlinePlayer != null && onlinePlayer.isOnline()) {
-                    String msg = getConfig().getString("messages.already-claimed", "&c[!] คุณเคยรับรางวัลจากการเชื่อมโยงบัญชีไปแล้ว ไม่สามารถรับซ้ำได้!");
-                    onlinePlayer.sendMessage(ChatColor.translateAlternateColorCodes('&', msg));
+                    sendMessage(onlinePlayer, "messages.already-claimed");
                 }
                 return;
             }
@@ -94,8 +93,7 @@ public final class DiscordHook extends JavaPlugin {
                 getLogger().info("Discord ID " + discordId + " was already used to claim a reward!");
                 Player onlinePlayer = offlinePlayer.getPlayer();
                 if (onlinePlayer != null && onlinePlayer.isOnline()) {
-                    String msg = getConfig().getString("messages.discord-already-claimed", "&c[!] บัญชี Discord นี้เคยถูกนำไปรับรางวัลแล้ว ไม่สามารถรับซ้ำได้!");
-                    onlinePlayer.sendMessage(ChatColor.translateAlternateColorCodes('&', msg));
+                    sendMessage(onlinePlayer, "messages.discord-already-claimed");
                 }
                 return;
             }
@@ -124,13 +122,36 @@ public final class DiscordHook extends JavaPlugin {
                         }
                     }
 
-                    String successMsg = getConfig().getString("messages.reward-success", "&a[!] เชื่อมต่อสำเร็จ! คุณได้รับรางวัลเรียบร้อยแล้ว");
-                    if (successMsg != null && !successMsg.isEmpty()) {
-                        onlinePlayer.sendMessage(ChatColor.translateAlternateColorCodes('&', successMsg));
-                    }
+                    sendMessage(onlinePlayer, "messages.reward-success");
                 }
             });
         });
+    }
+
+    /**
+     * ส่งข้อความแจ้งเตือนให้ผู้เล่น โดยรองรับการเปิด/ปิด (enabled: true/false) ใน config
+     */
+    private void sendMessage(Player player, String path) {
+        if (player == null || !player.isOnline()) return;
+
+        if (getConfig().isConfigurationSection(path)) {
+            boolean enabled = getConfig().getBoolean(path + ".enabled", true);
+            if (!enabled) return;
+
+            String msg = getConfig().getString(path + ".text");
+            if (msg == null) {
+                msg = getConfig().getString(path + ".message", "");
+            }
+            if (!msg.isEmpty()) {
+                player.sendMessage(ChatColor.translateAlternateColorCodes('&', msg));
+            }
+        } else {
+            // รองรับรูปแบบ String เดิม
+            String msg = getConfig().getString(path, "");
+            if (!msg.isEmpty()) {
+                player.sendMessage(ChatColor.translateAlternateColorCodes('&', msg));
+            }
+        }
     }
 
     @Override
